@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Devoir_01.Models.Temperature>
+
+@{
+    ViewData["Title"] = "Previsions";
+
+}
+<link rel="stylesheet" href="~/css/previsions.css" />
+<h1 class="text-center title">Montréal, QC (Canada)</h1>
+<br />
+<br />
+<div class="row day-@Model.Count().ToString()">
+    @foreach (var item in Model)
+    {
+
+    <div class="col-md">
+
+        <div class="row justify-content-center text-capitalize dateinfo">@item.Date.ToString("dddd", new System.Globalization.CultureInfo("fr-FR"))</div>
+            <div class="row justify-content-center dateinfo"> @item.Date.ToString("d MMM yyyy") </div>
+
+        <div class="row justify-content-center">
+            @if (item.Temp <= 0)
+             {
+                <img class="image" src="~/img/neige.jpg" />
+             }
+            @if (item.Temp >= 20)
+             {
+                 <img class="image" src="~/img/soleil.jpg" />
+             }
+
+            @if (0 < item.Temp && item.Temp <= 10)
+             {
+                 <img class="image" src="~/img/pluie.jpg" />
+             }
+
+            @if (10 < item.Temp && item.Temp < 20)
+             {
+                 <img class="image" src="~/img/nuage.jpg" />
+             }
+                    
+        </div>
+        <div class="row temp justify-content-center">@Html.DisplayFor(modelItem => item.Temp)&#8451</div>
+        <div class="row justify-content-center">Min: @Html.DisplayFor(modelItem => item.MinTemp) &#8451</div>
+        <div class="row tempmin justify-content-center">Max: @Html.DisplayFor(modelItem => item.MaxTemp) &#8451</div>
+    </div>
+    }
+</div>
+<br />
+<br />
+<div class="link">
+    <span>@Html.ActionLink("Retour", "Index", new { /* id = Model.PrimaryKey */ })</span>
+    <span>
+        @if (Model.Count() == 3)
+            @Html.ActionLink("7 prochains jours", "Previsions", new { n = 7 })
+            else
+                @Html.ActionLink("3 prochains jours", "Previsions", new { n = 3 })
+    </span>
+    <span> @Html.ActionLink("Statistiques", "Stats", new { mois = 0 })</span>
+
+</div>

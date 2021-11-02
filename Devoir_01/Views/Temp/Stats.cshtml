@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Devoir_01.Models.Temperature>
+
+@{
+    ViewData["Title"] = "Stats";
+}
+
+<div class="body">
+    <h1 class="text-center title">Montréal, QC (Canada)</h1>
+    <br />
+    <br />
+    <div class="stats text-center">
+        <form asp-controller="Temp" asp-action="Stats">
+            <label>Choisir un mois </label>
+            <select class="text-capitalize" asp-items="ViewBag.months" onchange="this.form.submit()" id="mois" name="mois">
+                <option hidden value="@Model.First().Date.Month">@Model.First().Date.ToString("MMMM")</option>
+            </select>
+        </form>
+        <span>
+            Min: @ViewBag.minTemp &#8451
+        </span>
+        <span>
+            Max: @ViewBag.maxTemp &#8451
+        </span>
+        <span>
+            Moyenne: @ViewBag.averageTemp &#8451
+        </span>
+
+    </div>
+    <br />
+
+    <div class="scroll text-center tableHeader">
+        <table class="table table-striped mb-0">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Date)</th>
+                    <th>Température</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Date.ToString("yyyy/MM/dd")</td>
+                        <td>@item.Temp</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="link">
+        <span> @Html.ActionLink("Retour", "Index", new { })</span>
+        <span> @Html.ActionLink("3 prochains jours", "Previsions", new { n = 3 }) </span>
+        <span> @Html.ActionLink("7 prochains jours", "Previsions", new { n = 7 })</span>
+
+
+    </div>
+</div>

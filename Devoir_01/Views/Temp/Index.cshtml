@@ -1,0 +1,60 @@
+﻿@model Devoir_01.Models.Temperature
+
+@{
+    ViewData["Title"] = "Index";
+}
+<h1 class="text-center title">Montréal, QC (Canada)</h1>
+<br />
+<br />
+<div class="center">
+    <table>
+
+        <tr>
+            <td rowspan="4">
+                @if (Model.Temp <= 0)
+                {
+                    <img class="image" src="~/img/neige.jpg" />
+                }
+                @if (Model.Temp >= 20)
+                {
+                    <img class="image" src="~/img/soleil.jpg" />
+                }
+
+                @if (0 < Model.Temp && Model.Temp <= 10)
+                {
+                    <img class="image" src="~/img/pluie.jpg" />
+                }
+
+                @if (10 < Model.Temp && Model.Temp < 20)
+                {
+                    <img class="image" src="~/img/nuage.jpg" />
+                }
+            </td>
+            <td colspan="2" class="date">
+                <span class="text-capitalize">
+                    @Model.Date.ToString("dddd", new System.Globalization.CultureInfo("fr-FR"))
+                </span>
+                <span>
+                    @Model.Date.ToString("D")
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" class="temp">@Model.Temp &#8451</td>
+        </tr>
+        <tr>
+            <td class="minMaxTemp">Min: @Model.MinTemp &#8451</td>
+            <td class="minMaxTemp">Max: @Model.MaxTemp &#8451</td>
+        </tr>
+    </table>
+</div>
+<br />
+<br />
+<br />
+<div class="link">
+
+    <span> @Html.ActionLink("3 prochains jours", "Previsions", new { n = 3 }) </span>
+    <span> @Html.ActionLink("7 prochains jours", "Previsions", new { n = 7 })</span>
+    <span> @Html.ActionLink("Statistiques", "Stats", new { mois = 0 })</span>
+</div>
+
